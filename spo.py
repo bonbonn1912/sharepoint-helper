@@ -40,7 +40,7 @@ class SharePointHelper():
         data = open(file_path).read()
         spo_endpoint = f"{self._base_url}/sites/{site}/_api/web/getFolderByServerRelativeUrl('{spo_path}')/files/add(url='{file_name}', overwrite=True)"
         self.send_request(spo_endpoint, "POST",data, None, self._oauth2_token)
-        #
+        
     def send_request(self, url, method='GET',body=None,headers=None, token=None):
         if token == None and self._oauth2_token is None:
             raise Exception("Please Provide a valid token")
@@ -52,13 +52,8 @@ class SharePointHelper():
             }
         try:
             response = requests.request(method, url, headers=headers, data=body)
-            print(headers)
-            print(url)
-           # response = requests.post(url, data=body, headers=headers)
-            print(response.json())
             return response.json()
         except:
-            print("hallo")
-          #  raise Exception("Could not send request. Please check your Input Parameters")
+            raise Exception("Could not send request. Please check your Input Parameters")
 
     
